@@ -25,3 +25,10 @@ def post_view(request, post_id, *args, **kwards):
         }
         status = 404
     return JsonResponse(data, status=status)
+
+
+def posts_list_view(request, *args, **kwards):
+    allposts = Tweet.objects.all()
+    posts_list = [{'id': x.id, 'content': x.content} for x in allposts]
+    data = {'response': posts_list}
+    return JsonResponse(data)
