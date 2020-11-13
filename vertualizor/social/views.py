@@ -7,7 +7,8 @@ from .models import Tweet
 def post_create_view(request, *args, **kwargs):
     form = PostForm(request.POST or None)
     newUrl = request.POST.get('next') or None
-
+    understandRequest = request.POST.get('understand_request')
+    print('______________________', understandRequest)
     if form.is_valid():
         # note the next:[''], and content:['] arguamenst
         print('______________________ post Data:  ', request.POST)
