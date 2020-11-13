@@ -6,16 +6,14 @@ from .models import Tweet
 
 def post_create_view(request, *args, **kwargs):
     form = PostForm(request.POST or None)
-    newUrl = request.POST.get('next') or None
-    understandRequest = request.POST.get('understand_request')
-    print('______________________', understandRequest)
+    # newUrl = request.POST.get('next') or None
     if form.is_valid():
         # note the next:[''], and content:['] arguamenst
-        print('______________________ post Data:  ', request.POST)
+        # print('______________________ post Data:  ', request.POST)
         obj = form.save(commit=False)
         obj.save()
-        if newUrl != None:
-            return redirect(newUrl)
+        if request.POST.get('content'):
+            return redirect('/')
         form = PostForm()
     return render(request, 'pages/posting.html', context={"form": form})
 
