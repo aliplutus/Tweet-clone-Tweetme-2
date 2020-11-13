@@ -1,8 +1,21 @@
 {% extends '../base/base.html' %}
 {% block content %}
-<div class="container" id='posts'>
-      loading ...
+<div>
+      <div>
+            <form method='POST' action='/create/'>
+                  {% csrf_token %}
+                  <input name='next' type='hidden'/>
+                  <textarea name='content'></textarea>
+                  <button type='submit'>Save</button>
+            
+                </form>
+                
+      </div>
+          <div class="container" id='posts'>
+            loading ...
+      </div>
 </div>
+
 <script>
 const element = document.getElementById('posts')
 const xhr = new XMLHttpRequest()

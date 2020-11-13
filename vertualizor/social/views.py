@@ -7,6 +7,8 @@ from .models import Tweet
 def post_create_view(request, *args, **kwargs):
     form = PostForm(request.POST or None)
     if form.is_valid():
+        # note the next:[''], and content:['] arguamenst
+        print('______________________ post Data:  ', request.POST)
         obj = form.save(commit=False)
         obj.save()
         form = PostForm()
