@@ -1,7 +1,16 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
-# Create your views here.
+from .form import PostForm
 from .models import Tweet
+
+
+def post_create_view(request, *args, **kwargs):
+    form = PostForm(request.POST or None)
+    if form.is_valid():
+        obj = form.save(commit=False)
+        obj.save()
+        form = PostForm()
+    return render(request, 'pages/posting.html', context={"form": form})
 
 
 def home_view(request, *args, **kwards):
