@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from .form import PostForm
 from .models import Tweet
+from django.utils.http import is_safe_url
+from django.conf import settings
 
 
 def post_create_view(request, *args, **kwargs):
@@ -12,7 +14,8 @@ def post_create_view(request, *args, **kwargs):
         # print('______________________ post Data:  ', request.POST)
         obj = form.save(commit=False)
         obj.save()
-        if request.POST.get('content'):
+        nextUrl = request.POST.get('content')
+        if nextUrl and is_safe_url(nextUrl, settings.ALLOWED_HOSTS):
             return redirect('/')
         form = PostForm()
     return render(request, 'pages/posting.html', context={"form": form})

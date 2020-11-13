@@ -4,7 +4,7 @@
       <div>
             <form method='POST' action='/create/'>
                   {% csrf_token %}
-                  <textarea name='content'></textarea>
+                  <textarea name='notsafe/url/' name='content'></textarea>
                   <button type='submit'>Save</button>
             
                 </form>

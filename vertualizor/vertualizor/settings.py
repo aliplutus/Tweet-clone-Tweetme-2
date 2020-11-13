@@ -48,6 +48,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'vertualizor.urls'
+ALLOWED_HOSTS = ['127.0.0.1', 'mydomain.com']
 
 TEMPLATES = [
     {
