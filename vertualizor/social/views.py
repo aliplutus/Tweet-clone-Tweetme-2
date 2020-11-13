@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from .form import PostForm
 from .models import Tweet
@@ -6,11 +6,15 @@ from .models import Tweet
 
 def post_create_view(request, *args, **kwargs):
     form = PostForm(request.POST or None)
+    newUrl = request.POST.get('next') or None
+
     if form.is_valid():
         # note the next:[''], and content:['] arguamenst
         print('______________________ post Data:  ', request.POST)
         obj = form.save(commit=False)
         obj.save()
+        if newUrl != None:
+            return redirect(newUrl)
         form = PostForm()
     return render(request, 'pages/posting.html', context={"form": form})
 
