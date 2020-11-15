@@ -10,17 +10,21 @@ def post_create_view(request, *args, **kwargs):
     print(request.is_ajax())
     form = PostForm(request.POST or None)
     # newUrl = request.POST.get('next') or None
-    if request.is_ajax():
-        return JsonResponse({}, status=201)  # 201 for creating element
     if form.is_valid():
         # note the next:[''], and content:['] arguamenst
         # print('______________________ post Data:  ', request.POST)
         obj = form.save(commit=False)
         obj.save()
         nextUrl = request.POST.get('content')
+
+        # create the JsonResponse after obj.save
+        if request.is_ajax():
+            return JsonResponse({}, status=201)  # 201 for creating element
+
         if nextUrl and is_safe_url(nextUrl, settings.ALLOWED_HOSTS):
             return redirect('/to-a-not-a-real-page')
         form = PostForm()
+
     return render(request, 'pages/posting.html', context={"form": form})
 
 
