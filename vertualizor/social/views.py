@@ -7,8 +7,11 @@ from django.conf import settings
 
 
 def post_create_view(request, *args, **kwargs):
+    print(request.is_ajax())
     form = PostForm(request.POST or None)
     # newUrl = request.POST.get('next') or None
+    if request.is_ajax():
+        return JsonResponse({}, status=201)  # 201 for creating element
     if form.is_valid():
         # note the next:[''], and content:['] arguamenst
         # print('______________________ post Data:  ', request.POST)

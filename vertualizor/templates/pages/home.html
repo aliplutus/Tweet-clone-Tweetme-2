@@ -26,7 +26,7 @@ xhr.onload = function(){
       var like = 0
       var dislike = 0
 
-console.log(like, dislike)
+// console.log(like, dislike)
       var listItems = xhr.response.response
       listItems.map((item,index)=>{
             posts = posts+"<p class='card'>"+'<div card-body>'+ index+'. ' +item.content + ' <button onclick="hanldeLike" class="btn btn-success">'+like +'👍'+ '</button>' + '<button id="dislike" class="btn btn-danger" onclick="hanldeDisLike()">'+dislike+ '👎' +'</button>' +'</div>' +'</p>'
@@ -55,13 +55,17 @@ const method = event.target.getAttribute('method')
 xhr = new XMLHttpRequest()
 xhr.onload =()=>{
       const serverResponse = xhr.response
-      console.log(serverResponse)
+      console.log(xhr.status, serverResponse)
       loadPosts(document.getElementById('posts'))
       //this will help us re-render the new tweets
 }
 xhr.open(method,action)
+// setRequestHeader manually if you want is_ajax() to work.
+xhr.setRequestHeader('HTTP_X_REQUESTED_WITH','XMLHttpRequest')
+xhr.setRequestHeader('X-Requested-with','XMLHttpRequest')
 const myFormData = new FormData(event.target)
 xhr.send(myFormData)
+
 }
 postForm.addEventListener("submit", handleSubmit )
 
