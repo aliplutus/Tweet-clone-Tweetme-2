@@ -16,7 +16,7 @@ def post_create_view(request, *args, **kwargs):
         obj.save()
         nextUrl = request.POST.get('content')
         if nextUrl and is_safe_url(nextUrl, settings.ALLOWED_HOSTS):
-            return redirect('/')
+            return redirect('/to-a-not-a-real-page')
         form = PostForm()
     return render(request, 'pages/posting.html', context={"form": form})
 
