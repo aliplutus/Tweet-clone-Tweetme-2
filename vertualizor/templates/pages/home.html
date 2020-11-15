@@ -2,7 +2,7 @@
 {% block content %}
 <div>
       <div>
-            <form method='POST' action='/create/'>
+            <form id='post-create-form' method='POST' action='/create/'>
                   {% csrf_token %}
                   <textarea  name='content'></textarea>
                   <button type='submit'>Save</button>
@@ -16,8 +16,15 @@
 </div>
 
 <script>
+const postForm = document.getElementById('post-create-form')
+postForm.addEventListener('submit',(event)=>{
+      event.preventDefault()
+} )
+
 const element = document.getElementById('posts')
-const xhr = new XMLHttpRequest()
+loadPosts(element)
+function loadPosts(element){
+      const xhr = new XMLHttpRequest()
 xhr.responseType = 'json'
 xhr.open("GET","/posts/")
 
@@ -42,5 +49,6 @@ function hanldeDisLike(){
 }
 
 xhr.send()
+}
 </script>
 {% endblock content %}
