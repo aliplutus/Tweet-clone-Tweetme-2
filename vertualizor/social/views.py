@@ -7,6 +7,7 @@ from django.conf import settings
 
 
 def post_create_view(request, *args, **kwargs):
+    # try to understand ajax later
     print(request.is_ajax())
     form = PostForm(request.POST or None)
     # newUrl = request.POST.get('next') or None
