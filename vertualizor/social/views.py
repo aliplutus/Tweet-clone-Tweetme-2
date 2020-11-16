@@ -20,7 +20,8 @@ def post_create_view(request, *args, **kwargs):
 
         # create the JsonResponse after obj.save
         if request.is_ajax():
-            return JsonResponse({}, status=201)  # 201 for creating element
+            # 201 for creating element
+            return JsonResponse(obj.serialize(), status=201)
 
         if nextUrl and is_safe_url(nextUrl, settings.ALLOWED_HOSTS):
             return redirect('/to-a-not-a-real-page')
@@ -54,6 +55,6 @@ def post_view(request, post_id, *args, **kwards):
 
 def posts_list_view(request, *args, **kwards):
     allposts = Tweet.objects.all()
-    posts_list = [{'id': x.id, 'content': x.content} for x in allposts]
+    posts_list = [x.serlize() for x in allposts]
     data = {'response': posts_list}
     return JsonResponse(data)

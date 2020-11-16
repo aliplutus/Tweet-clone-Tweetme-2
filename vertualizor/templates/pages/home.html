@@ -16,6 +16,9 @@
 </div>
 
 <script>
+      function postFormatting(item,index){
+            return '<div style="display:flex">'+index+"<p> . "+item.content+"</p>" + "<button>" +item.likes+' like'+"</button>"+'</div>'
+      }
       function loadPosts(element){
       const xhr = new XMLHttpRequest()
 xhr.responseType = 'json'
@@ -29,7 +32,7 @@ xhr.onload = function(){
 // console.log(like, dislike)
       var listItems = xhr.response.response
       listItems.map((item,index)=>{
-            posts = posts+"<p class='card'>"+'<div card-body>'+ index+'. ' +item.content + ' <button onclick="hanldeLike" class="btn btn-success">'+like +'👍'+ '</button>' + '<button id="dislike" class="btn btn-danger" onclick="hanldeDisLike()">'+dislike+ '👎' +'</button>' +'</div>' +'</p>'
+            posts = posts+postFormatting(item,index)
       })
       element.innerHTML = posts
       function hanldeLike(){
@@ -55,8 +58,8 @@ const method = event.target.getAttribute('method')
 xhr = new XMLHttpRequest()
 xhr.onload =()=>{
       const serverResponse = xhr.response
-      console.log(xhr.status, serverResponse)
       loadPosts(document.getElementById('posts'))
+      console.log(xhr.status, serverResponse)
       //this will help us re-render the new tweets
 }
 xhr.open(method,action)
