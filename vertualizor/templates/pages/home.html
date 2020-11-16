@@ -71,6 +71,8 @@ if(xhr.status===201){
       container.innerHTML = newPost+container.innerHTML 
       //this rest() is to reset (remove) the text in the form after you hit save.
       postForm.reset()
+} else if ( xhr.status===400){
+      console.log(xhr.response)
 }
 }
 

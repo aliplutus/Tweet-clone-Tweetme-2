@@ -11,6 +11,8 @@ def post_create_view(request, *args, **kwargs):
     print(request.is_ajax())
     form = PostForm(request.POST or None)
     # newUrl = request.POST.get('next') or None
+    if form.errors:
+        return JsonResponse(form.errors, status=400)
     if form.is_valid():
         # note the next:[''], and content:['] arguamenst
         # print('______________________ post Data:  ', request.POST)
