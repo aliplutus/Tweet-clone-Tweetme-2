@@ -6,7 +6,7 @@ class Tweet(models.Model):
     content = models.TextField(blank=True, null=True)
     imagePath = models.FileField(upload_to='images/', blank=True, null=True)
 
-    def serlize(self):
+    def serialize(self):
         return {
             'id': self.id,
             'content': self.content,
