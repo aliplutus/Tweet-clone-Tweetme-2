@@ -4,7 +4,7 @@
       <div>
             <form id='post-create-form' method='POST' action='/create/'>
                   {% csrf_token %}
-                  <textarea  name='content'></textarea>
+                  <textarea required  name='content'></textarea>
                   <button type='submit'>Save</button>
             
                 </form>
@@ -56,13 +56,24 @@ function handleSubmit(event){
 const action = event.target.getAttribute('action')
 const method = event.target.getAttribute('method')
 xhr = new XMLHttpRequest()
+xhr.open(method,action)
 xhr.onload =()=>{
       const serverResponse = xhr.response
-      loadPosts(document.getElementById('posts'))
-      console.log(xhr.status, serverResponse)
-      //this will help us re-render the new tweets
+if(xhr.status===201){
+     const container = document.getElementById('posts')
+      // loadPosts(container)
+      const newPost = postFormatting(JSON.parse(serverResponse),null)
+      // console.log(newPost)
+      // console.log(xhr.status, serverResponse)
+      //render only new posts instead of reloading all posts.
+      //also note newPost+container.innerHTML  return new tiweets in the top
+      //but container.innerHTML+newPost return new posts at the bottom
+      container.innerHTML = newPost+container.innerHTML 
+      //this rest() is to reset (remove) the text in the form after you hit save.
+      postForm.reset()
 }
-xhr.open(method,action)
+}
+
 // setRequestHeader manually if you want is_ajax() to work.
 xhr.setRequestHeader('HTTP_X_REQUESTED_WITH','XMLHttpRequest')
 xhr.setRequestHeader('X-Requested-with','XMLHttpRequest')
