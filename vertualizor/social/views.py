@@ -3,13 +3,14 @@ from .models import Tweet
 from django.utils.http import is_safe_url
 from .serializers import TweeSerializers
 from rest_framework.response import Response
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.permissions import IsAuthenticated
-
+from rest_framework.authentication import SessionAuthentication
 # this woll make POST request work and re-render the new posts.
 
 
 @api_view(["POST"])
+# @authentication_classes([SessionAuthentication,MyCustomAuth])
 @permission_classes([IsAuthenticated])
 def post_create_view(request, *args, **kwargs):
     serializer = TweeSerializers(data=request.POST)
