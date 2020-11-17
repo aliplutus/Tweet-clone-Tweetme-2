@@ -73,6 +73,10 @@ if(xhr.status===201){
       postForm.reset()
 } else if ( xhr.status===400){
       console.log(xhr.response)
+} else if (xhr.status===401){
+      // if you try to write a tweet and are not logined in this will redirect you to login.
+      window.location.href = '/accounts/login/'
+      
 }
 }
 
