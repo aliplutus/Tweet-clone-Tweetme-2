@@ -5,7 +5,7 @@ from .models import Tweet
 class TweeSerializers(serializers.ModelSerializer):
     class Meta:
         model = Tweet
-        fields = ['content', 'id', 'user']
+        fields = ['content']  # fields = ['id', 'user', 'content']
 
     def validate_content(self, value):
         if len(value) > 200:
