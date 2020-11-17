@@ -4,39 +4,15 @@ from .form import PostForm
 from .models import Tweet
 from django.utils.http import is_safe_url
 from django.conf import settings
+from .serializers import TweeSerializers
 
 
 def post_create_view(request, *args, **kwargs):
-    user = request.user
-    if not request.user.is_authenticated:
-        user = None
-        if request.is_ajax():
-            return JsonResponse({}, status=401)
-        return redirect(settings.LOGIN_URL)
-    # try to understand ajax later
-    print(request.is_ajax())
-    form = PostForm(request.POST or None)
-    # newUrl = request.POST.get('next') or None
-    if form.errors:
-        return JsonResponse(form.errors, status=400)
-    if form.is_valid():
-        # note the next:[''], and content:['] arguamenst
-        # print('______________________ post Data:  ', request.POST)
-        obj = form.save(commit=False)
-        obj.user = user
-        obj.save()
-        nextUrl = request.POST.get('content')
-
-        # create the JsonResponse after obj.save
-        if request.is_ajax():
-            # 201 for creating element
-            return JsonResponse(obj.serialize(), status=201)
-
-        if nextUrl and is_safe_url(nextUrl, settings.ALLOWED_HOSTS):
-            return redirect('/to-a-not-a-real-page')
-        form = PostForm()
-
-    return render(request, 'pages/posting.html', context={"form": form})
+    serializer = TweeSerializers(data=request.POST or None)
+    if serializer.is_valid():
+        serializer.save(user=request.user)
+        return JsonResponse(serializer.data, status=201)
+    return JsonResponse({}, status=400)
 
 
 def home_view(request, *args, **kwards):
