@@ -77,6 +77,9 @@ if(xhr.status===201){
       // if you try to write a tweet and are not logined in this will redirect you to login.
       window.location.href = '/accounts/login/'
       
+}else if (xhr.status===403){
+      window.location.href = '/accounts/login/'
+      
 }
 }
 
