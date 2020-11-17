@@ -7,6 +7,12 @@ from django.conf import settings
 
 
 def post_create_view(request, *args, **kwargs):
+    user = request.user
+    if not request.user.is_authenticated:
+        user = None
+        if request.is_ajax():
+            return JsonResponse({}, status=401)
+        return redirect(settings.LOGIN_URL)
     # try to understand ajax later
     print(request.is_ajax())
     form = PostForm(request.POST or None)
@@ -17,6 +23,7 @@ def post_create_view(request, *args, **kwargs):
         # note the next:[''], and content:['] arguamenst
         # print('______________________ post Data:  ', request.POST)
         obj = form.save(commit=False)
+        obj.user = user
         obj.save()
         nextUrl = request.POST.get('content')
 
