@@ -30,7 +30,7 @@ xhr.onload = function(){
       var dislike = 0
 
 // console.log(like, dislike)
-      var listItems = xhr.response.response
+      var listItems = xhr.response
       listItems.map((item,index)=>{
             posts = posts+postFormatting(item,index)
       })

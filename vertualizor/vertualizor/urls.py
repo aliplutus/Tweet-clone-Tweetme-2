@@ -18,7 +18,7 @@ from django.urls import path, include
 from social.views import home_view, post_view, posts_list_view, post_create_view
 
 urlpatterns = [
-    path('posts/<int:post_id>', post_view),  # dyanmic url
+    path('posts/<int:postId>', post_view),  # dyanmic url
     path('posts/', posts_list_view),
     path('create/', post_create_view),
     path('', home_view),
