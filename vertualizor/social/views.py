@@ -33,6 +33,20 @@ def post_view(request, postId, *args, **kwards):
     return Response(TweeSerializers(qs.first()).data, status=200)
 
 
+@api_view(["DELETE", 'POST'])
+@permission_classes([IsAuthenticated])
+def post_delete_view(request, postId, *args, **kwards):
+    qs = Tweet.objects.filter(id=postId)
+    if not qs.exists():
+        return Response({}, status=404)
+    qs = qs.filter(user=request.user)
+    if not qs.exists():
+        return Response({"message": 'you cant delete this Post'}, status=401)
+    obj = qs.first()
+    obj.delete()
+    return Response({'Message': "post removed"}, status=200)
+
+
 @api_view(["GET"])
 def posts_list_view(request, *args, **kwards):
     qs = Tweet.objects.all()

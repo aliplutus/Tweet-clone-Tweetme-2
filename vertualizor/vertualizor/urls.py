@@ -15,10 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from social.views import home_view, post_view, posts_list_view, post_create_view
+from social.views import home_view, post_view, posts_list_view, post_create_view, post_delete_view
 
 urlpatterns = [
     path('posts/<int:postId>', post_view),  # dyanmic url
+    path('posts/<int:postId>/delete', post_delete_view),
     path('posts/', posts_list_view),
     path('create/', post_create_view),
     path('', home_view),

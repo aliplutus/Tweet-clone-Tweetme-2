@@ -127,12 +127,18 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-# https://www.django-rest-framework.org/api-guide/settings/#default_authentication_classes
+
+# DEFAULT_RENDERER_CLASSES = [
+#     'rest_framework.renderers.JSONRenderer',
+# ]
+# if DEBUG:
+#     DEFAULT_RENDERER_CLASSES += [
+#         'rest_framework.renderers.BrowsableAPIRenderer']
+
+# # https://www.django-rest-framework.org/api-guide/settings/#default_authentication_classes
 # REST_FRAMEWORK = {
-#     'DEFAULT_RENDERER_CLASSES': [
-#         'rest_framework.renderers.JSONRenderer',
-#     ],
-#     'DEFAULT_PARSER_CLASSES': [
-#         'rest_framework.parsers.JSONParser',
-#     ]
+#     # 'DEFAULT_RENDERER_CLASSES': [
+#     #     'rest_framework.renderers.JSONRenderer',
+#     # ],
+#     'DEFAULT_PARSER_CLASSES': DEFAULT_RENDERER_CLASSES
 # }
