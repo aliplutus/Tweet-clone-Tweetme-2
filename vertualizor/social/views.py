@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Tweet
 from django.utils.http import is_safe_url
-from .serializers import TweeSerializers
+from .serializers import TweeSerializers, TweetActionsSerlizer
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -52,3 +52,32 @@ def posts_list_view(request, *args, **kwards):
     qs = Tweet.objects.all()
     serializer = TweeSerializers(qs, many=True)
     return Response(serializer.data)
+
+# rember this is not added to urls.
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def post_actions_view(request, *args, **kwards):
+    '''
+    actions = like,unlike,retweet
+    '''
+    # i dont understand how request.POST will send the id and the action type to the serlizer?
+    serlizer = TweetActionsSerlizer(request.POST)
+    if serlizer.is_valid(raise_exception=True):
+        data = serlizer.validated_data
+        post_id = data.get('id')
+        action = data.get('action')
+    qs = Tweet.objects.filter(id=post_id)
+    if not qs.exists():
+        return Response({}, status=404)
+    obj = qs.first()
+    if action == 'like':
+        obj.likes.add(request.user)
+    elif action == 'unlike':
+        obj.likes.remove(request.user)
+    elif action == 'retweet':
+        # ToDo later
+        pass
+
+    return Response({'Message': "post removed"}, status=200)
