@@ -1,10 +1,15 @@
-from .models import Tweet
+from .models import Tweet, PostLike
 from django.contrib import admin
 
 # Register your models here.
 
 
+class PostLike(admin.TabularInline):
+    model = PostLike
+
+
 class PostsAdmin(admin.ModelAdmin):
+    inlines = [PostLike]
     # where to search.
     search_fields = ['content', "user__username", "user__email"]
     # this to dispaly USER Content
