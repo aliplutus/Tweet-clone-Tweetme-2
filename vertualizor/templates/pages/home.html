@@ -17,7 +17,7 @@
 
 <script>
       function postFormatting(item,index){
-            return '<div style="display:flex">'+index+"<p> . "+item.content+"</p>" + "<button>" +item.likes+' like'+"</button>"+'</div>'
+            return '<div style="display:flex">'+index+"<p> . "+item.content+"</p>" + "<button>" +item.like.length+' likes'+"</button>"+'</div>'
       }
       function loadPosts(element){
       const xhr = new XMLHttpRequest()
@@ -26,20 +26,20 @@ xhr.open("GET","/posts/")
 
 xhr.onload = function(){
       var posts = ''
-      var like = 0
-      var dislike = 0
+      var likes = 0
+      var dislikes = 0
 
-// console.log(like, dislike)
+// console.log(likes, dislikes)
       var listItems = xhr.response
       listItems.map((item,index)=>{
             posts = posts+postFormatting(item,index)
       })
       element.innerHTML = posts
       function hanldeLike(){
-      like =like+1
+            return
 }
 function hanldeDisLike(){
-      dislike = dislike+1
+      return
 }
 
 }

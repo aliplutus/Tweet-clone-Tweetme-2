@@ -53,8 +53,6 @@ def posts_list_view(request, *args, **kwards):
     serializer = TweeSerializers(qs, many=True)
     return Response(serializer.data)
 
-# rember this is not added to urls.
-
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -63,7 +61,8 @@ def post_actions_view(request, *args, **kwards):
     actions = like,unlike,retweet
     '''
     # i dont understand how request.POST will send the id and the action type to the serlizer?
-    serlizer = TweetActionsSerlizer(request.POST)
+    # data=request.POST was a mistake
+    serlizer = TweetActionsSerlizer(data=request.POST)
     if serlizer.is_valid(raise_exception=True):
         data = serlizer.validated_data
         post_id = data.get('id')

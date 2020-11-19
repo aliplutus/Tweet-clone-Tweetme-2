@@ -16,9 +16,15 @@ class TweetActionsSerlizer(serializers.Serializer):
 
 
 class TweeSerializers(serializers.ModelSerializer):
+    # like = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = Tweet
-        fields = ['content']  # fields = ['id', 'user', 'content']
+        fields = ['id', 'content', 'like']
+
+    # def get_likes(self, obj):
+        # return obj.like.count()
+        # this convert the array of users ids wholiekd to the number of likes
 
     def validate_content(self, value):
         if len(value) > 200:
