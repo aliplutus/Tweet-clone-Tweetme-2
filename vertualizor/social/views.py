@@ -63,10 +63,13 @@ def post_actions_view(request, *args, **kwards):
     # i dont understand how request.POST will send the id and the action type to the serlizer?
     # data=request.POST was a mistake
     serlizer = TweetActionsSerlizer(data=request.data)
+    print(request.data)
     if serlizer.is_valid(raise_exception=True):
         data = serlizer.validated_data
         post_id = data.get('id')
         action = data.get('action')
+        content = 'content value'  # data.get('content')
+        # print(data,content) #i don't understand why it dos not get the content value.
     qs = Tweet.objects.filter(id=post_id)
     if not qs.exists():
         return Response({}, status=404)
@@ -77,7 +80,9 @@ def post_actions_view(request, *args, **kwards):
     elif action == 'unlike':
         obj.like.remove(request.user)
     elif action == 'retweet':
-        # ToDo later
-        pass
+        newTwee = Tweet.objects.create(
+            user=request.user, parent=obj, content=content)
+        serlizer = TweeSerializers(newTwee)
+        return Response(serlizer.data, status=200)
 
     return Response({}, status=200)

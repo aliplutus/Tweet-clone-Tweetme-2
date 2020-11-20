@@ -11,6 +11,7 @@ class PostLike(models.Model):
 
 
 class Tweet(models.Model):
+    parent = models.ForeignKey("self", null=True, on_delete=models.SET_NULL)
     # each post corsponded for a spesific user
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     timeStamp = models.DateTimeField(auto_now_add=True)
