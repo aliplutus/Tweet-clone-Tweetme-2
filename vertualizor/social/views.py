@@ -62,7 +62,7 @@ def post_actions_view(request, *args, **kwards):
     '''
     # i dont understand how request.POST will send the id and the action type to the serlizer?
     # data=request.POST was a mistake
-    serlizer = TweetActionsSerlizer(data=request.POST)
+    serlizer = TweetActionsSerlizer(data=request.data)
     if serlizer.is_valid(raise_exception=True):
         data = serlizer.validated_data
         post_id = data.get('id')
@@ -72,11 +72,12 @@ def post_actions_view(request, *args, **kwards):
         return Response({}, status=404)
     obj = qs.first()
     if action == 'like':
-        obj.likes.add(request.user)
+        obj.like.add(request.user)
+        return Response(serlizer.data, status=200)
     elif action == 'unlike':
-        obj.likes.remove(request.user)
+        obj.like.remove(request.user)
     elif action == 'retweet':
         # ToDo later
         pass
 
-    return Response({'Message': "post removed"}, status=200)
+    return Response({}, status=200)
