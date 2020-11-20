@@ -5,6 +5,7 @@ from .models import Tweet
 class TweetActionsSerlizer(serializers.Serializer):
     id = serializers.IntegerField()
     action = serializers.CharField()
+    content = serializers.CharField(allow_blank=True, required=False)
 
     def validate_action(self, value):
         # lower = lower case letter.

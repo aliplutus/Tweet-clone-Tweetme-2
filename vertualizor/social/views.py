@@ -68,8 +68,8 @@ def post_actions_view(request, *args, **kwards):
         data = serlizer.validated_data
         post_id = data.get('id')
         action = data.get('action')
-        content = 'content value'  # data.get('content')
-        # print(data,content) #i don't understand why it dos not get the content value.
+        # you must serlize data to the get them.
+        content = data.get('content')
     qs = Tweet.objects.filter(id=post_id)
     if not qs.exists():
         return Response({}, status=404)
