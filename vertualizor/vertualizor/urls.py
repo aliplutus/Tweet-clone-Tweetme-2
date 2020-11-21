@@ -24,11 +24,9 @@ from social.views import (home_view,
 
 urlpatterns = [
     path('posts/<int:postId>', post_view),  # dyanmic url
-    path('posts/<int:postId>/delete', post_delete_view),
-    path('posts/', posts_list_view),
-    path('posts/actions/', post_actions_view),
     path('create/', post_create_view),
     path('', home_view),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
+    path('posts/', include("social.urls"))
 ]
