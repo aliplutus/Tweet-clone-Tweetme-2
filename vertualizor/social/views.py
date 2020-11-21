@@ -83,6 +83,6 @@ def post_actions_view(request, *args, **kwards):
         newTwee = Tweet.objects.create(
             user=request.user, parent=obj, content=content)
         serlizer = TweeSerializers(newTwee)
-        return Response(serlizer.data, status=200)
+        return Response(serlizer.data, status=201)
 
     return Response({}, status=200)

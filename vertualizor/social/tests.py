@@ -15,6 +15,8 @@ class TweetTestCase(TestCase):
         Tweet.objects.create(content='first Tweet.', user=self.user)
         Tweet.objects.create(content='second Tweet.', user=self.user)
         Tweet.objects.create(content='third Tweet.', user=self.user)
+        # current number of tweets.
+        self.currentCount = Tweet.objects.all().count()
 
     def test_user_create(self):
         user = User.objects.get(username='IamANewUser')
@@ -53,3 +55,17 @@ class TweetTestCase(TestCase):
         for i in response.json():
             if i.get('id') == id_value:
                 self.assertEqual(len(i.get('like')), 0)
+
+    def test_actions_reTweet(self):
+        client = self.get_client()
+        id_value = 1
+        postResponse = client.post(
+            '/posts/actions/', {'id': id_value, 'action': 'retweet'})
+        response = client.get('/posts/')
+        self.assertEqual(postResponse.status_code, 201)
+        self.assertTrue(postResponse.json().get('is_retweet'))
+        # to make sure that it is a new tweet should have diffrent id.
+        self.assertNotEqual(id_value, postResponse.json().get("id"))
+        print(self.currentCount, postResponse.json().get("id"))
+        # the new tweet should have an id = prevuse number of tweets +1
+        self.assertEqual(self.currentCount+1, postResponse.json().get("id"))
