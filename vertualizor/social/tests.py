@@ -38,3 +38,13 @@ class TweetTestCase(TestCase):
       #   print(response, response.json())
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.json()), 3)
+
+    def test_actions_like(self):
+        client = self.get_client()
+        id_value = 1
+        client.post('/posts/actions/', {'id': id_value, 'action': 'like'})
+        response = client.get('/posts/')
+        self.assertEqual(response.status_code, 200)
+        for i in response.json():
+            if i.get('id') == id_value:
+                self.assertEqual(len(i.get('like')), 1)
