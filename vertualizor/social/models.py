@@ -25,9 +25,12 @@ class Tweet(models.Model):
         # this reverse the order of tweets but I don't understand how.
         ordering = ["-id"]
 
-    def serialize(self):
-        return {
-            'id': self.id,
-            'content': self.content,
-            'likes': random.randint(0, 200)
-        }
+    @property
+    def is_retweet(self):
+        return self.parent != None
+    # def serialize(self):
+    #     return {
+    #         'id': self.id,
+    #         'content': self.content,
+    #         'likes': random.randint(0, 200)
+    #     }
