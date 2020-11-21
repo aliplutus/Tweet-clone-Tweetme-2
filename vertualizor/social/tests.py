@@ -1,3 +1,4 @@
+from rest_framework.test import APIClient
 from django.test import TestCase
 
 # Create your tests here.
@@ -21,3 +22,8 @@ class TweetTestCase(TestCase):
         self.assertEqual(newTweet.id, 1)
         self.assertEqual(newTweet.user, self.user)
         self.assertEqual(newTweet.content, 'new tweet.')
+
+    def test_api_login(self):
+        #   https://www.django-rest-framework.org/api-guide/testing/
+        client = APIClient()
+        client.login(username=self.user.username, password='newPassWord')
