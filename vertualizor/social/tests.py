@@ -11,15 +11,13 @@ class TweetTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
             username='IamANewUser', password='newPassWord')
-        User.objects.create_user(
-            username='IamANewUser2', password='newPassWord2')
 
     def test_user_create(self):
         user = User.objects.get(username='IamANewUser')
         self.assertEqual(self.user.username, 'IamANewUser')
-        user = User.objects.get(username='IamANewUser2')
-        self.assertEqual(user.username, 'IamANewUser2')
-        self.assertEqual(1, 1)
 
-    def Tes_1_equal_2(self):
-        self.assertEqual(1, 2)
+    def test_post_create(self):
+        newTweet = Tweet.objects.create(content='new tweet.', user=self.user)
+        self.assertEqual(newTweet.id, 1)
+        self.assertEqual(newTweet.user, self.user)
+        self.assertEqual(newTweet.content, 'new tweet.')
