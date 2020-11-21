@@ -19,3 +19,7 @@ class TweetTestCase(TestCase):
         self.assertEqual(self.user.username, 'IamANewUser')
         user = User.objects.get(username='IamANewUser2')
         self.assertEqual(user.username, 'IamANewUser2')
+        self.assertEqual(1, 1)
+
+    def Tes_1_equal_2(self):
+        self.assertEqual(1, 2)
