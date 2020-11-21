@@ -12,6 +12,9 @@ class TweetTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
             username='IamANewUser', password='newPassWord')
+        Tweet.objects.create(content='first Tweet.', user=self.user)
+        Tweet.objects.create(content='second Tweet.', user=self.user)
+        Tweet.objects.create(content='third Tweet.', user=self.user)
 
     def test_user_create(self):
         user = User.objects.get(username='IamANewUser')
@@ -19,7 +22,7 @@ class TweetTestCase(TestCase):
 
     def test_post_create(self):
         newTweet = Tweet.objects.create(content='new tweet.', user=self.user)
-        self.assertEqual(newTweet.id, 1)
+        self.assertEqual(newTweet.id, 4)
         self.assertEqual(newTweet.user, self.user)
         self.assertEqual(newTweet.content, 'new tweet.')
 
@@ -32,5 +35,6 @@ class TweetTestCase(TestCase):
     def test_posts_list(self):
         client = self.get_client()
         response = client.get('/posts/')
-        print(response, response.json())
+      #   print(response, response.json())
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.json()), 3)
