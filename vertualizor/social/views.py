@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Tweet
 from django.utils.http import is_safe_url
-from .serializers import TweeSerializers, TweetActionsSerlizer
+from .serializers import CreateTweeSerializers, TweeSerializers, TweetActionsSerlizer
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -13,7 +13,7 @@ from rest_framework.authentication import SessionAuthentication
 # @authentication_classes([SessionAuthentication,MyCustomAuth])
 @permission_classes([IsAuthenticated])
 def post_create_view(request, *args, **kwargs):
-    serializer = TweeSerializers(data=request.POST)
+    serializer = CreateTweeSerializers(data=request.POST)
     # raise_exception= if form.error reutnr error and status400
     if serializer.is_valid(raise_exception=True):
         serializer.save(user=request.user)

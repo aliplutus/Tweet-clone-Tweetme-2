@@ -23,6 +23,15 @@ class TweeSerializers(serializers.ModelSerializer):
         model = Tweet
         fields = ['id', 'content', 'like']
 
+    def get_content(self, obj):
+        return obj.content
+
+
+class CreateTweeSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Tweet
+        fields = ['id', 'content', 'like']
+
     # def get_likes(self, obj):
         # return obj.like.count()
         # this convert the array of users ids wholiekd to the number of likes
