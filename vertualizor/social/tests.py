@@ -23,7 +23,14 @@ class TweetTestCase(TestCase):
         self.assertEqual(newTweet.user, self.user)
         self.assertEqual(newTweet.content, 'new tweet.')
 
-    def test_api_login(self):
-        #   https://www.django-rest-framework.org/api-guide/testing/
+    def get_client(self):
+      #     test_api_login
         client = APIClient()
         client.login(username=self.user.username, password='newPassWord')
+        return client
+
+    def test_posts_list(self):
+        client = self.get_client()
+        response = client.get('/posts/')
+        print(response, response.json())
+        self.assertEqual(response.status_code, 200)
