@@ -16,6 +16,10 @@ class TweetTestCase(TestCase):
         Tweet.objects.create(content='second Tweet.', user=self.user)
         Tweet.objects.create(content='third Tweet.', user=self.user)
         # current number of tweets.
+
+        self.user2 = User.objects.create_user(
+            username='IamANewUser2', password='newPassWord2')
+        Tweet.objects.create(content='first tweet of user2', user=self.user2)
         self.currentCount = Tweet.objects.all().count()
 
     def test_user_create(self):
@@ -24,7 +28,7 @@ class TweetTestCase(TestCase):
 
     def test_post_create(self):
         newTweet = Tweet.objects.create(content='new tweet.', user=self.user)
-        self.assertEqual(newTweet.id, 4)
+        self.assertEqual(newTweet.id, 5)
         self.assertEqual(newTweet.user, self.user)
         self.assertEqual(newTweet.content, 'new tweet.')
 
@@ -34,12 +38,18 @@ class TweetTestCase(TestCase):
         client.login(username=self.user.username, password='newPassWord')
         return client
 
+    def get_client2(self):
+      #     test_api_login
+        client = APIClient()
+        client.login(username=self.user2.username, password='newPassWord2')
+        return client
+
     def test_posts_list(self):
         client = self.get_client()
         response = client.get('/posts/')
       #   print(response, response.json())
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.json()), 3)
+        self.assertEqual(len(response.json()), 4)
 
     def test_actions_like_and_unlike(self):
         client = self.get_client()
@@ -91,3 +101,13 @@ class TweetTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         response = client.delete('/posts/1/delete/')
         self.assertEqual(response.status_code, 404)
+
+    def test_who_can_delete_post(self):
+        client = self.get_client()
+        # get_client() can't delete the 4th post
+        response = client.delete('/posts/4/delete/')
+        self.assertEqual(response.status_code, 401)
+        # get_client2() can delete tht 4th post
+        client2 = self.get_client2()
+        response = client2.delete('/posts/4/delete/')
+        self.assertEqual(response.status_code, 200)
