@@ -78,3 +78,16 @@ class TweetTestCase(TestCase):
     #     self.assertEqual(response.status_code, 201)
     #     # newTweetId = response.json().get('id')
     #     # self.assertEqual(self.currentCount+1, newTweetId)
+
+    def test_get_post_by_id(self):
+        client = self.get_client()
+        response = client.get('/posts/1')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json().get('id'), 1)
+
+    def test_delete_post(self):
+        client = self.get_client()
+        response = client.delete('/posts/1/delete/')
+        self.assertEqual(response.status_code, 200)
+        response = client.delete('/posts/1/delete/')
+        self.assertEqual(response.status_code, 404)
