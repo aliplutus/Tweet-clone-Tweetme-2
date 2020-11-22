@@ -69,3 +69,12 @@ class TweetTestCase(TestCase):
         print(self.currentCount, postResponse.json().get("id"))
         # the new tweet should have an id = prevuse number of tweets +1
         self.assertEqual(self.currentCount+1, postResponse.json().get("id"))
+
+    # def test_api_create(self):
+    #     data = {"content": "create a new post"}
+    #     client = self.get_client()
+    #     response = client.post('posts/create/', data)
+    #     print(response)
+    #     self.assertEqual(response.status_code, 201)
+    #     # newTweetId = response.json().get('id')
+    #     # self.assertEqual(self.currentCount+1, newTweetId)
