@@ -13,8 +13,6 @@ SECRET_KEY = '6)ej64kx92vba7!6tq76^k0smwy)$t5z1m$q6@tn0gxvd58cl9'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -31,9 +29,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'social',
-    'rest_framework'
-
-
+    'rest_framework',
+    'corsheaders',
 ]
 SITE_ID = 1
 
@@ -41,6 +38,7 @@ SITE_ID = 1
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -49,7 +47,7 @@ MIDDLEWARE = [
 ]
 LOGIN_URL = '/accounts/login/'
 ROOT_URLCONF = 'vertualizor.urls'
-ALLOWED_HOSTS = ['127.0.0.1', 'mydomain.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '']
 
 TEMPLATES = [
     {
@@ -127,6 +125,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_URLS_REGEX = r'^/.*$'
 
 # DEFAULT_RENDERER_CLASSES = [
 #     'rest_framework.renderers.JSONRenderer',
