@@ -157,3 +157,27 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+.tweet-me-web/node_modules
+.tweet-me-web/pnp
+.tweet-me-web/pnp.js
+
+# testing
+.tweet-me-web/coverage
+
+# production
+.tweet-me-web/build
+
+# misc
+.tweet-me-web/DS_Store
+.tweet-me-web/env.local
+.tweet-me-web/env.development.local
+.tweet-me-web/env.test.local
+.tweet-me-web/env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
