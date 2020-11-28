@@ -22,11 +22,18 @@ from social.views import (home_view,
                           post_delete_view,
                           post_actions_view)
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     path('posts/<int:postId>', post_view),  # dyanmic url
     path('create/', post_create_view),
     path('', home_view),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
-    path('posts/', include("social.urls"))
+    path('posts/', include("social.urls")),
+
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL,
+                          document_root=settings.STATIC_ROOT)
