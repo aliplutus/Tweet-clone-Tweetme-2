@@ -21,6 +21,7 @@ function App() {
   return (
     <div className="App">
       <TreeView />
+      {/* // creating new post don't re-render the post component. */}
       {state.map((item: any, index: number) => (
         <Post action={action} setAction={setAction} item={item} key={index} />
       ))}
