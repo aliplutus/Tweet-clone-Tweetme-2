@@ -134,17 +134,17 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_URLS_REGEX = r'^/.*$'
 
-DEFAULT_RENDERER_CLASSES = [
-    'rest_framework.renderers.JSONRenderer',
-]
-if DEBUG:
-    DEFAULT_RENDERER_CLASSES += [
-        'rest_framework.renderers.BrowsableAPIRenderer']
+# DEFAULT_RENDERER_CLASSES = [
+#     'rest_framework.renderers.JSONRenderer',
+# ]
+# if DEBUG:
+#     DEFAULT_RENDERER_CLASSES += [
+#         'rest_framework.renderers.BrowsableAPIRenderer']
 
-# https://www.django-rest-framework.org/api-guide/settings/#default_authentication_classes
-REST_FRAMEWORK = {
-    # 'DEFAULT_RENDERER_CLASSES': [
-    #     'rest_framework.renderers.JSONRenderer',
-    # ],
-    'DEFAULT_PARSER_CLASSES': DEFAULT_RENDERER_CLASSES
-}
+# # https://www.django-rest-framework.org/api-guide/settings/#default_authentication_classes
+# REST_FRAMEWORK = {
+#     # 'DEFAULT_RENDERER_CLASSES': [
+#     #     'rest_framework.renderers.JSONRenderer',
+#     # ],
+#     'DEFAULT_PARSER_CLASSES': DEFAULT_RENDERER_CLASSES
+# }
