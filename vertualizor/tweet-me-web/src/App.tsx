@@ -2,6 +2,7 @@ import React from "react";
 import "./App.css";
 import Post from "./Components/Post";
 import loadTweets from "./API/Get";
+import TreeView from "./Components/treeView";
 function App() {
   const [state, setstate] = React.useState<any>([]);
   const [action, setAction] = React.useState("");
@@ -19,6 +20,7 @@ function App() {
 
   return (
     <div className="App">
+      <TreeView />
       {state.map((item: any, index: number) => (
         <Post action={action} setAction={setAction} item={item} key={index} />
       ))}
