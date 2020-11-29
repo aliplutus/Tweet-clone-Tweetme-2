@@ -3,9 +3,28 @@ import "./App.css";
 import Post from "./Components/Post";
 import loadTweets from "./API/Get";
 import TreeView from "./Components/treeView";
+
 function App() {
   const [state, setstate] = React.useState<any>([]);
   const [action, setAction] = React.useState("");
+  const ref: any = React.useRef();
+  function handleSubmit(event: any) {
+    event.preventDefault();
+    let newTweet = ref.current.value;
+    setstate(
+      (pre: any) =>
+        (pre = [
+          {
+            content: newTweet,
+            like: [],
+            is_retweet: false,
+            parent: null,
+          },
+          ...pre,
+        ])
+    );
+    ref.current.value = "";
+  }
   React.useEffect(() => {
     const myCallback = (response: any, status: any) => {
       console.log(response, status);
@@ -20,6 +39,10 @@ function App() {
 
   return (
     <div className="App">
+      <form onSubmit={handleSubmit}>
+        <textarea ref={ref} required />
+        <button type="submit">submit</button>
+      </form>
       <TreeView />
       {/* // creating new post don't re-render the post component. */}
       {state.map((item: any, index: number) => (

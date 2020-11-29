@@ -87,7 +87,7 @@ function Post(props: Props) {
         image="https://www.princeton.edu/sites/default/files/styles/half_2x/public/images/2018/01/clouds-19.jpg?itok=Qfa5j6NW"
         title="Paella dish"
       />
-      <CardContent contentEditable>
+      <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
           {item.content}
         </Typography>
