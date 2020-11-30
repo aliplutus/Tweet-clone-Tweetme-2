@@ -3,7 +3,7 @@ import "./App.css";
 import Post from "./Components/Post";
 import loadTweets from "./API/Get";
 import TreeView from "./Components/treeView";
-
+import { lookup } from "./API/Get";
 function App() {
   const [state, setstate] = React.useState<any>([]);
   const [action, setAction] = React.useState("");
@@ -11,18 +11,15 @@ function App() {
   function handleSubmit(event: any) {
     event.preventDefault();
     let newTweet = ref.current.value;
-    setstate(
-      (pre: any) =>
-        (pre = [
-          {
-            content: newTweet,
-            like: [],
-            is_retweet: false,
-            parent: null,
-          },
-          ...pre,
-        ])
-    );
+    const callback = (response: any, status: number) => {
+      if (status === 201) {
+        setstate((pre: any) => (pre = [response, ...pre]));
+      } else {
+        alert(response + status);
+      }
+    };
+    lookup("POST", "/posts/", callback, { content: newTweet });
+
     ref.current.value = "";
   }
   React.useEffect(() => {

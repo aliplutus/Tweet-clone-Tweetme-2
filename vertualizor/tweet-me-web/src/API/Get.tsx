@@ -1,11 +1,13 @@
-function loadTweets(callback: any) {
+export function lookup(
+  method: "GET" | "POST" | "PUT" | "DELETE",
+  endpoint?: "/posts/" | string,
+  callback?: Function | any,
+  data?: any
+) {
+  let jsonData: string | undefined = data && JSON.stringify(data);
   const xhr = new XMLHttpRequest();
-  const method = "GET"; // "POST"
-  // const url = "http://127.0.0.1:8000/posts/";
-  const url = "http://localhost:8000/posts/";
-  const responseType = "json";
-  xhr.responseType = responseType;
-  xhr.open(method, url);
+  xhr.responseType = "json";
+  xhr.open(method, `http://localhost:8000${endpoint}`);
   xhr.onload = function () {
     callback(xhr.response, xhr.status);
   };
@@ -13,6 +15,9 @@ function loadTweets(callback: any) {
     console.log(e);
     callback({ message: "The request was an error" }, 400);
   };
-  xhr.send();
+  xhr.send(jsonData);
+}
+function loadTweets(callback: any) {
+  lookup("GET", "/posts/", callback);
 }
 export default loadTweets;
