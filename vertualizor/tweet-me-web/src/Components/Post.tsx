@@ -21,44 +21,45 @@ type Props = {
     like: number[];
     is_retweet: boolean;
     parent: any;
+    user: number;
   };
   setAction: any;
   action: string;
 };
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      maxWidth: "50%",
-      margin: "10px",
-    },
-    media: {
-      height: 0,
-      paddingTop: "56.25%", // 16:9
-    },
-    expand: {
-      transform: "rotate(0deg)",
-      marginLeft: "auto",
-      transition: theme.transitions.create("transform", {
-        duration: theme.transitions.duration.shortest,
-      }),
-    },
-    expandOpen: {
-      transform: "rotate(180deg)",
-    },
-    avatar: {
-      backgroundColor: red[500],
-    },
-  })
-);
-
 function Post(props: Props) {
+  const item = props.item;
   const [isover, setMouse] = React.useState(false);
-  const classes = useStyles();
+
   const [expanded, setExpanded] = React.useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-  const item = props.item;
+  const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+      root: {
+        maxWidth: "50%",
+        margin: "10px",
+      },
+      media: {
+        height: 0,
+        paddingTop: "56.25%", // 16:9
+      },
+      expand: {
+        transform: "rotate(0deg)",
+        marginLeft: "auto",
+        transition: theme.transitions.create("transform", {
+          duration: theme.transitions.duration.shortest,
+        }),
+      },
+      expandOpen: {
+        transform: "rotate(180deg)",
+      },
+      avatar: {
+        backgroundColor: item.user === 2 ? red[500] : "green",
+      },
+    })
+  );
+  const classes = useStyles();
 
   React.useEffect(() => {
     props.setAction("");
@@ -79,7 +80,7 @@ function Post(props: Props) {
             {isover && <MoreVertIcon />}
           </IconButton>
         }
-        title="Shrimp and Chorizo Paella"
+        title={item.user}
         subheader="September 14, 2016"
       />
       <CardMedia
