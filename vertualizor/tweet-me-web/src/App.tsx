@@ -14,13 +14,12 @@ function App() {
     const callback = (response: any, status: number) => {
       if (status === 201) {
         setstate((pre: any) => (pre = [response, ...pre]));
+        ref.current.value = "";
       } else {
-        alert(response + status);
+        console.log(response, status);
       }
     };
-    lookup("POST", "/posts/", callback, { content: newTweet });
-
-    ref.current.value = "";
+    lookup("POST", "/create/", callback, { content: newTweet });
   }
   React.useEffect(() => {
     const myCallback = (response: any, status: any) => {
@@ -33,7 +32,7 @@ function App() {
     };
     loadTweets(myCallback);
   }, []);
-
+  console.log(state);
   return (
     <div className="App">
       <form onSubmit={handleSubmit}>

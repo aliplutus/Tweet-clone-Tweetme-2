@@ -6,6 +6,7 @@ class TweetActionsSerlizer(serializers.Serializer):
     id = serializers.IntegerField()
     action = serializers.CharField()
     content = serializers.CharField(allow_blank=True, required=False)
+    user = serializers.CharField()
 
     def validate_action(self, value):
         # lower = lower case letter.
@@ -42,7 +43,8 @@ class TweeSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = Tweet
-        fields = ['id', 'content', 'like', 'is_retweet', 'parent']
+        fields = ['id', 'content', 'like',
+                  'is_retweet', 'parent', 'user']
 
     # def get_content(self, obj):
     #     content = obj.content
