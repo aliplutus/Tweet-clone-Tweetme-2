@@ -13,7 +13,7 @@ from rest_framework.authentication import SessionAuthentication
 # @authentication_classes([SessionAuthentication,MyCustomAuth])
 @permission_classes([IsAuthenticated])
 def post_create_view(request, *args, **kwargs):
-    serializer = CreateTweeSerializers(data=request.data)
+    serializer = CreateTweeSerializers(data={"content": str(request.body)})
     # raise_exception= if form.error reutnr error and status400
     if serializer.is_valid(raise_exception=True):
         serializer.save(user=request.user)

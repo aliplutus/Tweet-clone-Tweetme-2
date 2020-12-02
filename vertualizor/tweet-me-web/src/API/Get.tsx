@@ -19,7 +19,7 @@ export function lookup(
   callback?: Function | any,
   data?: any
 ) {
-  let jsonData: string | undefined = data && JSON.stringify(data);
+  let jsonData: any = data; //JSON.stringify(data);
   const xhr = new XMLHttpRequest();
   xhr.responseType = "json";
   xhr.open(method, `http://localhost:8000${endpoint}`);
@@ -37,7 +37,7 @@ export function lookup(
     console.log(e);
     callback({ message: "The request was an error" }, 400);
   };
-  xhr.send(jsonData);
+  jsonData ? xhr.send(jsonData.content) : xhr.send();
 }
 function loadTweets(callback: any) {
   lookup("GET", "/posts/", callback);
