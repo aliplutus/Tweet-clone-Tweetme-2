@@ -7,13 +7,14 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import SessionAuthentication
 # this woll make POST request work and re-render the new posts.
+import json
 
 
 @api_view(["POST"])
 # @authentication_classes([SessionAuthentication,MyCustomAuth])
 @permission_classes([IsAuthenticated])
 def post_create_view(request, *args, **kwargs):
-    serializer = CreateTweeSerializers(data={"content": str(request.body)})
+    serializer = CreateTweeSerializers(data=json.loads(request.body))
     # raise_exception= if form.error reutnr error and status400
     if serializer.is_valid(raise_exception=True):
         serializer.save(user=request.user)
