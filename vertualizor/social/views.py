@@ -74,9 +74,10 @@ def post_actions_view(request, *args, **kwards):
     if not qs.exists():
         return Response({}, status=404)
     obj = qs.first()
+    serializer = TweeSerializers(qs, many=True)
     if action == 'like':
         obj.like.add(request.user)
-        return Response(serlizer.data, status=200)
+        return Response(serializer.data, status=200)
     elif action == 'unlike':
         obj.like.remove(request.user)
     elif action == 'retweet':
