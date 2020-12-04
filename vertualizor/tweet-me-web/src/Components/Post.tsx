@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
-import Card from "@material-ui/core/Card";
+
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
@@ -24,14 +24,15 @@ type Props = {
     parent: any;
     user: number;
   };
-  setAction: any;
-  action: string;
 };
 function Post(props: Props) {
   const item: any = props.item;
   const [isover, setMouse] = React.useState(false);
   //🔴now problem when add new post the likes don't rerender.
   const [likes, setLike] = React.useState(item.like);
+  React.useEffect(() => {
+    setLike(item.like);
+  }, [item]);
 
   const [expanded, setExpanded] = React.useState(false);
   const handleExpandClick = () => {
@@ -39,10 +40,6 @@ function Post(props: Props) {
   };
   const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-      root: {
-        maxWidth: "50%",
-        margin: "10px",
-      },
       media: {
         height: 0,
         paddingTop: "56.25%", // 16:9
@@ -64,9 +61,6 @@ function Post(props: Props) {
   );
   const classes = useStyles();
 
-  React.useEffect(() => {
-    props.setAction("");
-  }, [props.action]);
   function handlClikeLikeBtn(event: any) {
     function callBack(response: any, status: number) {
       // console.log(response, status, item);
@@ -80,11 +74,18 @@ function Post(props: Props) {
       user: item.user,
     });
   }
+  function handleRetweet(event: any) {
+    function callBack(response: any, status: any) {}
+    lookup("POST", "/posts/actions/", callBack, {
+      action: "retweet",
+      id: item.id,
+      user: item.user,
+    });
+  }
   return (
-    <Card
+    <div
       onMouseEnter={() => setMouse(true)}
       onMouseLeave={() => setMouse(false)}
-      className={classes.root}
     >
       <CardHeader
         avatar={
@@ -98,11 +99,11 @@ function Post(props: Props) {
         title={item.user}
         subheader="September 14, 2016"
       />
-      <CardMedia
+      {/* <CardMedia
         className={classes.media}
         image="https://www.princeton.edu/sites/default/files/styles/half_2x/public/images/2018/01/clouds-19.jpg?itok=Qfa5j6NW"
         title="Paella dish"
-      />
+      /> */}
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
           {item.content}
@@ -112,7 +113,7 @@ function Post(props: Props) {
         <IconButton onClick={handlClikeLikeBtn} aria-label="add to favorites">
           {likes.length} <ThumbUpAltOutlinedIcon />
         </IconButton>
-        <IconButton aria-label="share">
+        <IconButton onClick={handleRetweet} aria-label="share">
           <ShareIcon />
         </IconButton>
         <IconButton
@@ -133,16 +134,7 @@ function Post(props: Props) {
             Heat 1/2 cup of the broth in a pot until simmering, add saffron and
             set aside for 10 minutes.
           </Typography>
-          <Typography paragraph>
-            Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet
-            over medium-high heat. Add chicken, shrimp and chorizo, and cook,
-            stirring occasionally until lightly browned, 6 to 8 minutes.
-            Transfer shrimp to a large plate and set aside, leaving chicken and
-            chorizo in the pan. Add pimentón, bay leaves, garlic, tomatoes,
-            onion, salt and pepper, and cook, stirring often until thickened and
-            fragrant, about 10 minutes. Add saffron broth and remaining 4 1/2
-            cups chicken broth; bring to a boil.
-          </Typography>
+          <Typography paragraph>text herer.</Typography>
           <Typography paragraph>
             Add rice and stir very gently to distribute. Top with artichokes and
             peppers, and cook without stirring, until most of the liquid is
@@ -157,7 +149,7 @@ function Post(props: Props) {
           </Typography>
         </CardContent>
       </Collapse>
-    </Card>
+    </div>
   );
 }
 

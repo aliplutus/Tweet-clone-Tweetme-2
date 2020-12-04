@@ -3,15 +3,16 @@ import "./App.css";
 import Post from "./Components/Post";
 import TreeView from "./Components/treeView";
 import { lookup } from "./API/Get";
+import Card from "@material-ui/core/Card";
 function App() {
   const [state, setstate] = React.useState<any>([]);
-  const [action, setAction] = React.useState("");
   const ref: any = React.useRef();
   function handleSubmit(event: any) {
     event.preventDefault();
     let newTweet = ref.current.value;
     const callback = (response: any, status: number) => {
       if (status === 201) {
+        console.log(response, status);
         setstate((pre: any) => (pre = [response, ...pre]));
         ref.current.value = "";
       } else {
@@ -32,6 +33,18 @@ function App() {
     lookup("GET", "/posts/", myCallback);
   }, []);
   console.log(state);
+  function Tweet(state: any) {
+    return state.map((item: any, index: number) => (
+      <Card style={{ width: "50%", margin: "10px" }}>
+        {item.parent && (
+          <Card style={{ margin: "50px", border: "red" }}>
+            <Post item={item.parent} key={index} />
+          </Card>
+        )}
+        <Post item={item} key={index} />
+      </Card>
+    ));
+  }
   return (
     <div className="App">
       <form onSubmit={handleSubmit}>
@@ -40,9 +53,7 @@ function App() {
       </form>
       <TreeView />
       {/* // creating new post don't re-render the post component. */}
-      {state.map((item: any, index: number) => (
-        <Post action={action} setAction={setAction} item={item} key={index} />
-      ))}
+      {Tweet(state)}
     </div>
   );
 }
