@@ -39,7 +39,3 @@ export function lookup(
   };
   xhr.send(jsonData);
 }
-function loadTweets(callback: any) {
-  lookup("GET", "/posts/", callback);
-}
-export default loadTweets;

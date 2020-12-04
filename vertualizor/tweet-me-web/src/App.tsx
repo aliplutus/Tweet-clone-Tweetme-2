@@ -1,7 +1,6 @@
 import React from "react";
 import "./App.css";
 import Post from "./Components/Post";
-import loadTweets from "./API/Get";
 import TreeView from "./Components/treeView";
 import { lookup } from "./API/Get";
 function App() {
@@ -30,7 +29,7 @@ function App() {
         setstate(["There was an error"]);
       }
     };
-    loadTweets(myCallback);
+    lookup("GET", "/posts/", myCallback);
   }, []);
   console.log(state);
   return (
