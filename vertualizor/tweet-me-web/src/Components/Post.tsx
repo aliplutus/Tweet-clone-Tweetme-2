@@ -15,6 +15,7 @@ import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
 import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import { lookup } from "../API/Get";
 type Props = {
   item: {
     content: string | null;
@@ -27,8 +28,9 @@ type Props = {
   action: string;
 };
 function Post(props: Props) {
-  const item = props.item;
+  const item: any = props.item;
   const [isover, setMouse] = React.useState(false);
+  const [likes, setLike] = React.useState(item.like);
 
   const [expanded, setExpanded] = React.useState(false);
   const handleExpandClick = () => {
@@ -64,7 +66,20 @@ function Post(props: Props) {
   React.useEffect(() => {
     props.setAction("");
   }, [props.action]);
-
+  function handlClikeLikeBtn(event: any) {
+    function callBack(response: any, status: number) {
+      // console.log(response, status, item);
+      if (status == 200) {
+        !likes.includes(parseInt(response.user)) &&
+          setLike([...likes, parseInt(response.user)]);
+      }
+    }
+    lookup("POST", "/posts/actions/", callBack, {
+      action: "like",
+      id: item.id,
+      user: item.user,
+    });
+  }
   return (
     <Card
       onMouseEnter={() => setMouse(true)}
@@ -94,8 +109,8 @@ function Post(props: Props) {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          {item.like.length} <ThumbUpAltOutlinedIcon />
+        <IconButton onClick={handlClikeLikeBtn} aria-label="add to favorites">
+          {likes.length} <ThumbUpAltOutlinedIcon />
         </IconButton>
         <IconButton aria-label="share">
           <ShareIcon />

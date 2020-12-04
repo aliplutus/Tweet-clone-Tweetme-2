@@ -63,8 +63,7 @@ def post_actions_view(request, *args, **kwards):
     '''
     # i dont understand how request.POST will send the id and the action type to the serlizer?
     # data=request.POST was a mistake
-    serlizer = TweetActionsSerlizer(data=request.data)
-    print(request.data)
+    serlizer = TweetActionsSerlizer(data=json.loads(request.body))
     if serlizer.is_valid(raise_exception=True):
         data = serlizer.validated_data
         post_id = data.get('id')
