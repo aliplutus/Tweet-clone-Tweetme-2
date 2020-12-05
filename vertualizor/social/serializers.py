@@ -19,7 +19,7 @@ class TweetActionsSerlizer(serializers.Serializer):
 class CreateTweeSerializers(serializers.ModelSerializer):
     class Meta:
         model = Tweet
-        fields = ['id', 'content', 'like', 'user']
+        fields = ['id', 'content', 'like']
 
     # def get_likes(self, obj):
         # return obj.like.count()
