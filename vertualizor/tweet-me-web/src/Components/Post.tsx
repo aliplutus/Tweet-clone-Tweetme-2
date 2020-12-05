@@ -1,14 +1,14 @@
 import React from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
-
+import ButtonGroup from "@material-ui/core/ButtonGroup";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Collapse from "@material-ui/core/Collapse";
 import Avatar from "@material-ui/core/Avatar";
-import IconButton from "@material-ui/core/IconButton";
+import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
 import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
@@ -17,6 +17,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { lookup } from "../API/Get";
 type Props = {
+  setstate: Function;
   item: {
     content: string | null;
     like: number[];
@@ -40,6 +41,14 @@ function Post(props: Props) {
   };
   const useStyles = makeStyles((theme: Theme) =>
     createStyles({
+      root: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        "& > *": {
+          margin: theme.spacing(1),
+        },
+      },
       media: {
         height: 0,
         paddingTop: "56.25%", // 16:9
@@ -75,7 +84,14 @@ function Post(props: Props) {
     });
   }
   function handleRetweet(event: any) {
-    function callBack(response: any, status: any) {}
+    function callBack(response: any, status: any) {
+      console.log(response);
+      response.content =
+        "parent post later you shoul be able to edit it befre retweeting and after retweeting";
+      props.setstate((pre: any) => {
+        return [response, ...pre];
+      });
+    }
     lookup("POST", "/posts/actions/", callBack, {
       action: "retweet",
       id: item.id,
@@ -91,11 +107,11 @@ function Post(props: Props) {
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}></Avatar>
         }
-        action={
-          <IconButton aria-label="settings">
-            {isover && <MoreVertIcon />}
-          </IconButton>
-        }
+        // action={
+        //   <Button aria-label="settings">
+        //     {isover && <MoreVertIcon />}
+        //   </Button>
+        // }
         title={item.user}
         subheader="September 14, 2016"
       />
@@ -109,23 +125,26 @@ function Post(props: Props) {
           {item.content}
         </Typography>
       </CardContent>
-      <CardActions disableSpacing>
-        <IconButton onClick={handlClikeLikeBtn} aria-label="add to favorites">
-          {likes.length} <ThumbUpAltOutlinedIcon />
-        </IconButton>
-        <IconButton onClick={handleRetweet} aria-label="share">
-          <ShareIcon />
-        </IconButton>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
+      <CardActions className={classes.root} disableSpacing>
+        <ButtonGroup color="primary" aria-label="outlined primary button group">
+          <Button aria-label="settings">{<MoreVertIcon />}</Button>
+          <Button onClick={handlClikeLikeBtn} aria-label="add to favorites">
+            {likes.length} <ThumbUpAltOutlinedIcon />
+          </Button>
+          <Button onClick={handleRetweet} aria-label="share">
+            <ShareIcon />
+          </Button>
+          <Button
+            className={clsx(classes.expand, {
+              [classes.expandOpen]: expanded,
+            })}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show more"
+          >
+            <ExpandMoreIcon />
+          </Button>
+        </ButtonGroup>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>

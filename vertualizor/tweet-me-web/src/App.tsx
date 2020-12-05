@@ -43,10 +43,10 @@ function App() {
         <Card style={{ width: "50%", margin: "10px" }}>
           {item.parent && (
             <Card style={{ margin: "50px", border: "red" }}>
-              <Post item={parentItem} key={index} />
+              <Post setstate={setstate} item={parentItem} key={index} />
             </Card>
           )}
-          <Post item={item} key={index} />
+          <Post setstate={setstate} item={item} key={index} />
         </Card>
       );
     });
