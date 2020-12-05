@@ -74,12 +74,14 @@ function Post(props: Props) {
     function callBack(response: any, status: number) {
       // console.log(response, status, item);
       if (status == 200) {
-        !likes.includes(parseInt(response.user)) && setLike(response[0].like);
+        setLike(response[0].like);
+        console.log({ object: response[0].like });
       }
     }
     lookup("POST", "/posts/actions/", callBack, {
-      action: "like",
+      action: likes.includes(item.user) ? "unlike" : "like",
       id: item.id,
+      //i should be able to pass like adn unlike without wrting the user
       user: item.user,
     });
   }

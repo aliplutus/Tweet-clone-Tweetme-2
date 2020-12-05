@@ -50,6 +50,9 @@ def post_delete_view(request, postId, *args, **kwards):
 
 @api_view(["GET"])
 def posts_list_view(request, *args, **kwards):
+    # this authenticate withut google.
+    # later convert it to google auth.
+    print(request.user)
     qs = Tweet.objects.all()
     serializer = TweeSerializers(qs, many=True)
     return Response(serializer.data)
@@ -63,7 +66,9 @@ def post_actions_view(request, *args, **kwards):
     '''
     # i dont understand how request.POST will send the id and the action type to the serlizer?
     # data=request.POST was a mistake
-    serlizer = TweetActionsSerlizer(data=json.loads(request.body))
+    # like and unlike don't work probrly.
+    passedData = json.loads(request.body)
+    serlizer = TweetActionsSerlizer(data=passedData)
     if serlizer.is_valid(raise_exception=True):
         data = serlizer.validated_data
         post_id = data.get('id')
@@ -80,6 +85,7 @@ def post_actions_view(request, *args, **kwards):
         return Response(serializer.data, status=200)
     elif action == 'unlike':
         obj.like.remove(request.user)
+        return Response(serializer.data, status=200)
     elif action == 'retweet':
         newTwee = Tweet.objects.create(
             user=request.user, parent=obj, content=content)
