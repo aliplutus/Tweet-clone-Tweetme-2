@@ -34,16 +34,22 @@ function App() {
   }, []);
   console.log(state);
   function Tweet(state: any) {
-    return state.map((item: any, index: number) => (
-      <Card style={{ width: "50%", margin: "10px" }}>
-        {item.parent && (
-          <Card style={{ margin: "50px", border: "red" }}>
-            <Post item={item.parent} key={index} />
-          </Card>
-        )}
-        <Post item={item} key={index} />
-      </Card>
-    ));
+    return state.map((item: any, index: number) => {
+      const parentItem = {
+        ...item.parent,
+        user: item.user,
+      };
+      return (
+        <Card style={{ width: "50%", margin: "10px" }}>
+          {item.parent && (
+            <Card style={{ margin: "50px", border: "red" }}>
+              <Post item={parentItem} key={index} />
+            </Card>
+          )}
+          <Post item={item} key={index} />
+        </Card>
+      );
+    });
   }
   return (
     <div className="App">
