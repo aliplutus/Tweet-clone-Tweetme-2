@@ -29,9 +29,10 @@ type Props = {
 function Post(props: Props) {
   const item: any = props.item;
   const [isover, setMouse] = React.useState(false);
-  //🔴now problem when add new post the likes don't rerender.
   const [likes, setLike] = React.useState(item.like);
   React.useEffect(() => {
+    //this to rerender like button
+    //without it the new post will take the same info  of the last post.
     setLike(item.like);
   }, [item]);
 
@@ -78,8 +79,9 @@ function Post(props: Props) {
         console.log({ object: response[0].like });
       }
     }
+    console.log(likes.includes(item.user), item.user);
     lookup("POST", "/posts/actions/", callBack, {
-      action: likes.includes(item.user) ? "unlike" : "like",
+      action: "like",
       id: item.id,
     });
   }

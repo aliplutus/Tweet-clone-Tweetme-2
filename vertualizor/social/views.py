@@ -65,7 +65,6 @@ def post_actions_view(request, *args, **kwards):
     '''
     # i dont understand how request.POST will send the id and the action type to the serlizer?
     # data=request.POST was a mistake
-    # like and unlike don't work probrly.
     passedData = json.loads(request.body)
     serlizer = TweetActionsSerlizer(data=passedData)
     if serlizer.is_valid(raise_exception=True):
@@ -80,10 +79,11 @@ def post_actions_view(request, *args, **kwards):
     obj = qs.first()
     serializer = TweeSerializers(qs, many=True)
     if action == 'like':
-        obj.like.add(request.user)
-        return Response(serializer.data, status=200)
-    elif action == 'unlike':
-        obj.like.remove(request.user)
+        if request.user in obj.like.all():
+            obj.like.remove(request.user)
+        else:
+            obj.like.add(request.user)
+
         return Response(serializer.data, status=200)
     elif action == 'retweet':
         newTwee = Tweet.objects.create(

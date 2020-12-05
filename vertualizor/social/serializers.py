@@ -11,7 +11,7 @@ class TweetActionsSerlizer(serializers.Serializer):
         # lower = lower case letter.
         # strip = drop spaces for example "like ".strip() = "like"
         value = value.lower().strip()
-        if not value in ['like', 'unlike', 'retweet']:
+        if not value in ['like', 'retweet']:
             raise serializers.ValidationError("this is not avalid action")
         return value
 
