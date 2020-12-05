@@ -81,8 +81,6 @@ function Post(props: Props) {
     lookup("POST", "/posts/actions/", callBack, {
       action: likes.includes(item.user) ? "unlike" : "like",
       id: item.id,
-      //i should be able to pass like adn unlike without wrting the user
-      user: item.user,
     });
   }
   function handleRetweet(event: any) {

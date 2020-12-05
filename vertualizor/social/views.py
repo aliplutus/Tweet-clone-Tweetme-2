@@ -52,7 +52,6 @@ def post_delete_view(request, postId, *args, **kwards):
 def posts_list_view(request, *args, **kwards):
     # this authenticate withut google.
     # later convert it to google auth.
-    print(request.user)
     qs = Tweet.objects.all()
     serializer = TweeSerializers(qs, many=True)
     return Response(serializer.data)
