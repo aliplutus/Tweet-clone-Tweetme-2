@@ -28,7 +28,7 @@ type Props = {
 };
 function Post(props: Props) {
   const item: any = props.item;
-  const [isover, setMouse] = React.useState(false);
+  // const [isover, setMouse] = React.useState(false);
   const [likes, setLike] = React.useState(item.like);
   React.useEffect(() => {
     //this to rerender like button
@@ -87,7 +87,7 @@ function Post(props: Props) {
   }
   function handleRetweet(event: any) {
     function callBack(response: any, status: any) {
-      console.log(response);
+      // console.log(response);
       response.content =
         "parent post later you shoul be able to edit it befre retweeting and after retweeting";
       props.setstate((pre: any) => {
@@ -102,8 +102,8 @@ function Post(props: Props) {
   }
   return (
     <div
-      onMouseEnter={() => setMouse(true)}
-      onMouseLeave={() => setMouse(false)}
+    // onMouseEnter={() => setMouse(true)}
+    // onMouseLeave={() => setMouse(false)}
     >
       <CardHeader
         avatar={
@@ -128,25 +128,30 @@ function Post(props: Props) {
         </Typography>
       </CardContent>
       <CardActions className={classes.root} disableSpacing>
-        <ButtonGroup color="primary" aria-label="outlined primary button group">
-          <Button aria-label="settings">{<MoreVertIcon />}</Button>
-          <Button onClick={handlClikeLikeBtn} aria-label="add to favorites">
-            {likes.length} <ThumbUpAltOutlinedIcon />
-          </Button>
-          <Button onClick={handleRetweet} aria-label="share">
-            <ShareIcon />
-          </Button>
-          <Button
-            className={clsx(classes.expand, {
-              [classes.expandOpen]: expanded,
-            })}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="show more"
+        {typeof item.is_retweet !== "undefined" && (
+          <ButtonGroup
+            color="primary"
+            aria-label="outlined primary button group"
           >
-            <ExpandMoreIcon />
-          </Button>
-        </ButtonGroup>
+            <Button aria-label="settings">{<MoreVertIcon />}</Button>
+            <Button onClick={handlClikeLikeBtn} aria-label="add to favorites">
+              {likes.length} <ThumbUpAltOutlinedIcon />
+            </Button>
+            <Button onClick={handleRetweet} aria-label="share">
+              <ShareIcon />
+            </Button>
+            <Button
+              className={clsx(classes.expand, {
+                [classes.expandOpen]: expanded,
+              })}
+              onClick={handleExpandClick}
+              aria-expanded={expanded}
+              aria-label="show more"
+            >
+              <ExpandMoreIcon />
+            </Button>
+          </ButtonGroup>
+        )}
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>

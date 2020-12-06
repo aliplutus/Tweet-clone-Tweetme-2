@@ -23,7 +23,7 @@ function App() {
   }
   React.useEffect(() => {
     const myCallback = (response: any, status: any) => {
-      console.log(response, status);
+      // console.log(response, status);
       if (status === 200) {
         setstate(response);
       } else {
@@ -32,7 +32,6 @@ function App() {
     };
     lookup("GET", "/posts/", myCallback);
   }, []);
-  console.log(state);
   function Tweet(state: any) {
     return state.map((item: any, index: number) => {
       const parentItem = {
