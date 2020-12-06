@@ -1,5 +1,4 @@
 import React from "react";
-import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -10,14 +9,15 @@ import Collapse from "@material-ui/core/Collapse";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import { red } from "@material-ui/core/colors";
 import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
 import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { lookup } from "../API/Get";
 import { Props } from "../Types/Types";
+import useStyles from "../UseStyles/UseStyles";
 function Post(props: Props) {
+  const classes = useStyles();
   const item: any = props.item;
   // const [isover, setMouse] = React.useState(false);
   const [likes, setLike] = React.useState(item.like);
@@ -31,36 +31,6 @@ function Post(props: Props) {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-  const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-      root: {
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        "& > *": {
-          margin: theme.spacing(1),
-        },
-      },
-      media: {
-        height: 0,
-        paddingTop: "56.25%", // 16:9
-      },
-      expand: {
-        transform: "rotate(0deg)",
-        marginLeft: "auto",
-        transition: theme.transitions.create("transform", {
-          duration: theme.transitions.duration.shortest,
-        }),
-      },
-      expandOpen: {
-        transform: "rotate(180deg)",
-      },
-      avatar: {
-        backgroundColor: item.user === 2 ? red[500] : "green",
-      },
-    })
-  );
-  const classes = useStyles();
 
   function handlClikeLikeBtn(event: any) {
     function callBack(response: any, status: number) {
@@ -80,14 +50,16 @@ function Post(props: Props) {
       // console.log(response);
       response.content =
         "parent post later you shoul be able to edit it befre retweeting and after retweeting";
-      props.setstate((pre: any) => {
-        return [response, ...pre];
-      });
+      if (status == 200) {
+        props.setstate((pre: any) => {
+          return [response, ...pre];
+        });
+      }
     }
     lookup("POST", "/posts/actions/", callBack, {
       action: "retweet",
       id: item.id,
-      user: item.user,
+      // user: item.user,
     });
   }
   return (
