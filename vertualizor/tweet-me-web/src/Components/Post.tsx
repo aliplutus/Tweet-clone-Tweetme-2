@@ -79,7 +79,6 @@ function Post(props: Props) {
         console.log({ object: response[0].like });
       }
     }
-    console.log(likes.includes(item.user), item.user);
     lookup("POST", "/posts/actions/", callBack, {
       action: "like",
       id: item.id,

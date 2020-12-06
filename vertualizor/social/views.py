@@ -54,10 +54,10 @@ def posts_list_view(request, *args, **kwards):
     # later convert it to google auth.
     qs = Tweet.objects.all()
     username = request.GET.get('username')
-    print(username)
     if username != None:
         qs = qs.filter(user__username__iexact=username)
     serializer = TweeSerializers(qs, many=True)
+    # print({'authed': request.user.username})
     return Response(serializer.data)
 
 

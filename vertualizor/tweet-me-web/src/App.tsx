@@ -21,6 +21,7 @@ function App() {
     };
     lookup("POST", "/create/", callback, { content: newTweet });
   }
+  const [username, setUsername] = React.useState("");
   React.useEffect(() => {
     const myCallback = (response: any, status: any) => {
       // console.log(response, status);
@@ -30,8 +31,10 @@ function App() {
         setstate(["There was an error"]);
       }
     };
-    lookup("GET", "/posts/", myCallback);
-  }, []);
+    const filterUserName = username.length > 0 ? "?username=" + username : "";
+    console.log(filterUserName);
+    lookup("GET", "/posts/" + filterUserName, myCallback);
+  }, [username]);
   function Tweet(state: any) {
     return state.map((item: any, index: number) => {
       const parentItem = {
@@ -52,6 +55,11 @@ function App() {
   }
   return (
     <div className="App">
+      <input
+        onKeyUp={(e: any) => {
+          setUsername(e.target.value);
+        }}
+      />
       <form onSubmit={handleSubmit}>
         <textarea ref={ref} required />
         <button type="submit">submit</button>
