@@ -16,16 +16,7 @@ import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { lookup } from "../API/Get";
-type Props = {
-  setstate: Function;
-  item: {
-    content: string | null;
-    like: number[];
-    is_retweet: boolean;
-    parent: any;
-    user: number;
-  };
-};
+import { Props } from "../Types/Types";
 function Post(props: Props) {
   const item: any = props.item;
   // const [isover, setMouse] = React.useState(false);
