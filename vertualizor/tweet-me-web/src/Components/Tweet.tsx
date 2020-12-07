@@ -3,7 +3,8 @@ import Post from "./Post";
 import Card from "@material-ui/core/Card";
 import { Item } from "../Types/Types";
 function Tweet(state: any, setstate: Function) {
-  return state.map((item: Item, index: number) => {
+  const items = state.length > 0 ? state : [state];
+  return items.map((item: Item, index: number) => {
     const parentItem = {
       ...item.parent,
       user: item.user,

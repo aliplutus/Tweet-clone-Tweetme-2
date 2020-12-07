@@ -21,6 +21,8 @@ function App() {
     lookup("POST", "/create/", callback, { content: newTweet });
   }
   const [username, setUsername] = React.useState("");
+  const [tweetId, setTweetId] = React.useState("");
+
   React.useEffect(() => {
     const myCallback = (response: any, status: any) => {
       console.log(response);
@@ -31,14 +33,21 @@ function App() {
       }
     };
     const filterUserName = username.length > 0 ? "?username=" + username : "";
-    lookup("GET", "/posts/" + filterUserName, myCallback);
-  }, [username]);
+    const filterPostsId = tweetId.length > 0 ? `${tweetId}` : "";
+    lookup("GET", "/posts/" + filterPostsId + filterUserName, myCallback);
+    console.log("/posts/" + filterPostsId + filterUserName);
+  }, [username, tweetId]);
 
   return (
     <div className="App">
       <input
         onKeyUp={(e: any) => {
           setUsername(e.target.value);
+        }}
+      />
+      <input
+        onKeyUp={(e: any) => {
+          setTweetId(e.target.value);
         }}
       />
       <form onSubmit={handleSubmit}>

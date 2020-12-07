@@ -19,8 +19,11 @@ import useStyles from "../UseStyles/UseStyles";
 function Post(props: Props) {
   const classes = useStyles();
   const item: any = props.item;
+  console.log(item);
   // const [isover, setMouse] = React.useState(false);
+
   const [likes, setLike] = React.useState(item.like);
+
   React.useEffect(() => {
     //this to rerender like button
     //without it the new post will take the same info  of the last post.
@@ -97,7 +100,7 @@ function Post(props: Props) {
           >
             <Button aria-label="settings">{<MoreVertIcon />}</Button>
             <Button onClick={handlClikeLikeBtn} aria-label="add to favorites">
-              {likes.length} <ThumbUpAltOutlinedIcon />
+              {likes} <ThumbUpAltOutlinedIcon />
             </Button>
             <Button onClick={handleRetweet} aria-label="share">
               <ShareIcon />
