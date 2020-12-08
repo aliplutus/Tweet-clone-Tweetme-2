@@ -19,7 +19,6 @@ import useStyles from "../UseStyles/UseStyles";
 function Post(props: Props) {
   const classes = useStyles();
   const item: any = props.item;
-  console.log(item);
   // const [isover, setMouse] = React.useState(false);
 
   const [likes, setLike] = React.useState(item.like);
@@ -53,7 +52,7 @@ function Post(props: Props) {
       // console.log(response);
       response.content =
         "parent post later you shoul be able to edit it befre retweeting and after retweeting";
-      if (status == 200) {
+      if (status == 201) {
         props.setstate((pre: any) => {
           return [response, ...pre];
         });

@@ -25,7 +25,7 @@ function App() {
 
   React.useEffect(() => {
     const myCallback = (response: any, status: any) => {
-      console.log(response);
+      // console.log(response);
       if (status === 200) {
         setstate(response);
       } else {
