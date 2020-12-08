@@ -4,6 +4,9 @@ import TreeView from "./Components/treeView";
 import { lookup } from "./API/Get";
 import Tweet from "./Components/Tweet";
 import { Item } from "./Types/Types";
+import { ThemeProvider } from "@material-ui/core/styles";
+import { theme } from "./UseStyles/UseStyles";
+
 function App() {
   const [state, setstate] = React.useState<any>([]);
   const ref: any = React.useRef();
@@ -39,6 +42,8 @@ function App() {
   }, [username, tweetId]);
 
   return (
+    // 🔴later users can change the theme.
+    // <ThemeProvider theme={theme}>
     <div className="App">
       <input
         onKeyUp={(e: any) => {
@@ -58,6 +63,7 @@ function App() {
       {/* // creating new post don't re-render the post component. */}
       {Tweet(state, setstate)}
     </div>
+    // </ThemeProvider>
   );
 }
 
