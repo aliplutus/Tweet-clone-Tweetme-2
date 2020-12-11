@@ -70,6 +70,9 @@ function Post(props: Props) {
     // onMouseLeave={() => setMouse(false)}
     >
       <CardHeader
+        onClick={(event: any) => {
+          window.location.href = item.id;
+        }}
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}></Avatar>
         }

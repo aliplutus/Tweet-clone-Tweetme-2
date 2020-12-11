@@ -37,8 +37,14 @@ function App() {
     };
     const filterUserName = username.length > 0 ? "?username=" + username : "";
     const filterPostsId = tweetId.length > 0 ? `${tweetId}` : "";
-    lookup("GET", "/posts/" + filterPostsId + filterUserName, myCallback);
-    console.log("/posts/" + filterPostsId + filterUserName);
+    console.log(window.location.pathname);
+    lookup(
+      "GET",
+      `/posts/${window.location.pathname.slice(1)}` +
+        filterPostsId +
+        filterUserName,
+      myCallback
+    );
   }, [username, tweetId]);
 
   return (
