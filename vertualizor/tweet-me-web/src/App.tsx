@@ -19,6 +19,9 @@ function App() {
         ref.current.value = "";
       } else {
         console.log(response, status);
+        if (status === 403) {
+          window.location.href = "accounts/login";
+        }
       }
     };
     lookup("POST", "/create/", callback, { content: newTweet });

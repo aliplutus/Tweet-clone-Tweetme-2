@@ -16,6 +16,8 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { lookup } from "../API/Get";
 import { Props } from "../Types/Types";
 import useStyles from "../UseStyles/UseStyles";
+import { TimerOutlined } from "@material-ui/icons";
+import { TIMEOUT } from "dns";
 function Post(props: Props) {
   const classes = useStyles();
   const item: any = props.item;
@@ -70,9 +72,6 @@ function Post(props: Props) {
     // onMouseLeave={() => setMouse(false)}
     >
       <CardHeader
-        onClick={(event: any) => {
-          window.location.href = item.id;
-        }}
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}></Avatar>
         }
@@ -82,7 +81,11 @@ function Post(props: Props) {
         //   </Button>
         // }
         title={item.user}
-        subheader="September 14, 2016"
+        subheader={
+          <a href={`${window.location.origin}/${item.id}`}>
+            September 14, 2016
+          </a>
+        }
       />
       {/* <CardMedia
         className={classes.media}

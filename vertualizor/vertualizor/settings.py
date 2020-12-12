@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'social',
     'rest_framework',
     'corsheaders',
+    'accounts',
 ]
 SITE_ID = 1
 
@@ -142,8 +143,9 @@ DEFAULT_AUTHENTICATION_CLASSES = [
 if DEBUG:
     DEFAULT_RENDERER_CLASSES += [
         'rest_framework.renderers.BrowsableAPIRenderer']
-    DEFAULT_AUTHENTICATION_CLASSES += [
-        'vertualizor.rest_api.dev.DevAuthentication']
+    # this must be deleted in the prodection stage.
+    # DEFAULT_AUTHENTICATION_CLASSES += [
+    #     'vertualizor.rest_api.dev.DevAuthentication']
 
 # https://www.django-rest-framework.org/api-guide/settings/#default_authentication_classes
 REST_FRAMEWORK = {
