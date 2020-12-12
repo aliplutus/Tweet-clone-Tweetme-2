@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from social.views import (home_view,
                           post_view,
                           posts_list_view,
@@ -42,6 +42,7 @@ urlpatterns = [
     # http://localhost:8000/posts/accounts/login/ don't work.
     path('accounts/', include('allauth.urls')),
     path('posts/', include("social.urls")),
+    re_path(r'profiles?/', include('profiles.urls')),
 
 ]
 if settings.DEBUG:
