@@ -1,7 +1,7 @@
  {% extends '../base/base.html' %}
 {% block content %}
 <h1>{{username}}</h1>
- <div  data-username="{{ profile_username }}"	data-username="{{ username }}"
+ <div data-postId={{username}}  data-username="{{ profile_username }}"	data-username="{{ username }}"
  data-can-tweet="false" data-can-tweet="false" class="container" id='root'></div>
 {% endblock content %}
 <!-- 🔴later you need to make reactjs respond to data-data.... -->

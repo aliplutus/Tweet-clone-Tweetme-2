@@ -40,18 +40,22 @@ function App() {
     };
     const filterUserName = username.length > 0 ? "?username=" + username : "";
     const filterPostsId = tweetId.length > 0 ? `${tweetId}` : "";
-    console.log(window.location.pathname);
+    // console.log(window.location.pathname);
+    const element = document.getElementById("root")!;
+    // console.log(element.dataset);
     lookup(
       "GET",
-      `/posts/${window.location.pathname.slice(1)}` +
+      `/posts/${
+        typeof element.dataset.postid == "undefined"
+          ? ""
+          : element.dataset.postid
+      }` +
         filterPostsId +
         filterUserName,
       myCallback
     );
   }, [username, tweetId]);
 
-  const element = document.getElementById("root")!;
-  console.log(element.dataset);
   return (
     // 🔴later users can change the theme.
     // <ThemeProvider theme={theme}>
