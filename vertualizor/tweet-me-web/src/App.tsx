@@ -50,6 +50,8 @@ function App() {
     );
   }, [username, tweetId]);
 
+  const element = document.getElementById("root")!;
+  console.log(element.dataset);
   return (
     // 🔴later users can change the theme.
     // <ThemeProvider theme={theme}>
