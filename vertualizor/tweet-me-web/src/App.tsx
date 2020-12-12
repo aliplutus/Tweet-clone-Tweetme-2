@@ -5,7 +5,6 @@ import { lookup } from "./API/Get";
 import Tweet from "./Components/Tweet";
 import { Item } from "./Types/Types";
 import { ThemeProvider } from "@material-ui/core/styles";
-import { theme } from "./UseStyles/UseStyles";
 
 function App() {
   const [state, setstate] = React.useState<any>([]);
@@ -38,22 +37,19 @@ function App() {
         setstate(["There was an error"]);
       }
     };
-    const filterUserName = username.length > 0 ? "?username=" + username : "";
-    const filterPostsId = tweetId.length > 0 ? `${tweetId}` : "";
-    // console.log(window.location.pathname);
     const element = document.getElementById("root")!;
+    const filterUserName =
+      typeof element.dataset.username == "undefined"
+        ? ""
+        : `?username=${element.dataset.username}`;
+    const filterPostsId =
+      typeof element.dataset.postid == "undefined"
+        ? ""
+        : element.dataset.postid;
+    // console.log(window.location.pathname);
+
     // console.log(element.dataset);
-    lookup(
-      "GET",
-      `/posts/${
-        typeof element.dataset.postid == "undefined"
-          ? ""
-          : element.dataset.postid
-      }` +
-        filterPostsId +
-        filterUserName,
-      myCallback
-    );
+    lookup("GET", `/posts/` + filterPostsId + filterUserName, myCallback);
   }, [username, tweetId]);
 
   return (
