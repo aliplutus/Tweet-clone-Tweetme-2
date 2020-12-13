@@ -127,6 +127,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+LOGIN_REDIRECT = '/'
+SOCIALACCOUNT_PROVIDERS = {'google': {'SCOPE': ['profile', 'email']},
+                           'AUTH_PRAMS': {"access_type": 'online', }}
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 
