@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Profile
 from django.http import Http404
-from .forms import ProfileForm
+# from .forms import ProfileForm
 
 
 def profile_update_view(request, *args, **kwargs):
@@ -14,8 +14,8 @@ def profile_update_view(request, *args, **kwargs):
         "email": user.email
     }
     my_profile = user.profile
-    form = ProfileForm(request.POST or None,
-                       instance=my_profile, initial=user_data)
+    # form = ProfileForm(request.POST or None,
+    #                    instance=my_profile, initial=user_data)
     if form.is_valid():
         profile_obj = form.save(commit=False)
         first_name = form.cleaned_data.get('first_name')
